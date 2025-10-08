@@ -1,24 +1,71 @@
-<!DOCTYPE html>
-<html lang="en">
+7<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard IOT </title>
+    <title>Dashboard IOT</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/mqtt/dist/mqtt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
-
 <body>
-   <h2>Monitoramento DHT11</h2> 
-   <canvas id="grafico" width="400" height="200"></canvas>
-   <script>
-    const client = mqtt.conect("wss://broker/hivemq/com:8884/mqtt");
+    <h2>Monitoramento  de temperatura e umidade DHT11</h2>
+    <canvas id="grafico" width="400" height="200"></canvas>
 
-    const label = [];
-    const tempdata = [];
-    const humData = [];
+    <script>
+        // Conectando ao broker MQTT via WebSocket
+        const client = mqtt.connect("wss://broker.hivemq.com:8884/mqtt");
 
-    const ctx = document.getElementById("grafico").getContext("2d");
+        const labels = [];
+        const tempData = [];
+        const humData = [];
 
-</script>
+        
+        const ctx = document.getElementById("grafico").getContext("2d");
+        const chart = new Chart(ctx, {
+            type: "line",
+            data: {
+                labels: labels,
+                datasets: [
+                    {
+                        label: "Temperatura (°C)",
+                        data: tempData,
+                        borderColor: "red",
+                        fill: false
+                    },
+                    {
+                        label: "Umidade (%)",
+                        data: humData,
+                        borderColor: "blue",
+                        fill: false
+                    }
+                ]
+            }
+        });
 
+        // Ao conectar
+        client.on("connect", () => {
+            console.log("Conectado ao MQTT");
+            client.subscribe("senai/iot/dht11");
+        });
+
+        // Ao receber mensagem
+        client.on("message", (topic, message) => {
+            const data = JSON.parse(message.toString());
+            const time = new Date().toLocaleTimeString();
+
+            labels.push(time);
+            tempData.push(data.temperatura);
+            humData.push(data.umidade);
+
+            if (labels.length > 20) {
+                labels.shift();
+                tempData.shift();
+                humData.shift();
+            }
+
+            chart.update();
+        });
+    </script>
 </body>
 </html>
