@@ -1,4 +1,5 @@
-//#include <DHT.h>
+#include <DHT.h>
+
 #define DHTPIN 2
 #define DHTTYPE DHT11
 
@@ -25,4 +26,3 @@ void loop() {
 
   delay(2000);
 }
-

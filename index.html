@@ -1,6 +1,8 @@
 7<!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard IOT</title>
@@ -9,12 +11,13 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
+    
     <h2>Monitoramento  de temperatura e umidade DHT11</h2>
     <canvas id="grafico" width="400" height="200"></canvas>
 
     <script>
         // Conectando ao broker MQTT via WebSocket
-        const client = mqtt.connect("wss://broker.hivemq.com:8884/mqtt");
+        const client = mqtt.connect("wss://broker.hivemq.com:8886/mqtt");
 
         const labels = [];
         const tempData = [];
