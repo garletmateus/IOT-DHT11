@@ -1,62 +1,41 @@
-/* Reset básico */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
 body {
-  height: 100vh;
-  font-family: Arial, sans-serif;
-  background-color: #f0f2f5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  background-color: #f8f9fa;
+  color: #212529;
+  transition: background-color 0.4s, color 0.4s;
 }
 
-.login-container {
-  background-color: white;
-  padding: 40px 30px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 400px;
+.dark-mode {
+  background-color: #121212 !important;
+  color: #f8f9fa !important;
 }
 
-h1 {
-  text-align: center;
-  margin-bottom: 20px;
-  color: #333;
+.dark-mode .card {
+  background-color: #1e1e1e !important;
+  color: #f8f9fa !important;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
-  color: #444;
-  font-weight: bold;
+.dark-mode .alert {
+  background-color: #842029 !important;
+  color: #fff !important;
 }
 
-input[type="email"],
-input[type="password"] {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
+.dark-mode h2,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode span {
+  color: #f8f9fa !important;
+}
+
+.dark-mode footer {
+  color: #ccc !important;
 }
 
 button {
-  width: 100%;
-  padding: 12px;
-  background-color: #007bff;
-  border: none;
-  color: white;
-  font-size: 16px;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  transition: all 0.3s;
 }
 
-button:hover {
-  background-color: #0056b3;
+.dark-mode button {
+  background-color: #333 !important;
+  color: #f8f9fa !important;
+  border-color: #f8f9fa !important;
 }

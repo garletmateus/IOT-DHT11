@@ -4,73 +4,60 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Login - Dashboard IoT</title>
-
-  <!-- Bootstrap 5 -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"/>
-
   <style>
-    body {
-      background-color: #f8f9fa;
-    }
-    .login-container {
-      max-width: 400px;
-      margin: 100px auto;
-      padding: 2rem;
-      border-radius: 8px;
-      background-color: #ffffff;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
+    body { background-color: #f8f9fa; }
+    .login-container { max-width: 400px; margin: 100px auto; padding: 2rem; border-radius: 8px; background-color: #fff; box-shadow: 0 0 10px rgba(0,0,0,0.1);}
   </style>
 </head>
 <body>
-
   <div class="container">
     <div class="login-container">
       <h3 class="text-center mb-4">Login - Dashboard IoT</h3>
-
-      <form id="loginForm">
+      <form id="loginForm" novalidate>
         <div class="mb-3">
           <label for="usuario" class="form-label">Usuário</label>
-          <input type="text" class="form-control" id="usuario" placeholder="Digite seu usuário" required>
+          <input type="text" class="form-control" id="usuario" placeholder="Digite seu usuário" required autocomplete="username">
         </div>
-
         <div class="mb-3">
           <label for="senha" class="form-label">Senha</label>
-          <input type="password" class="form-control" id="senha" placeholder="Digite sua senha" required>
+          <input type="password" class="form-control" id="senha" placeholder="Digite sua senha" required autocomplete="current-password">
         </div>
-
         <div id="mensagem" class="mb-3 text-center text-danger d-none"></div>
-
         <div class="d-grid">
           <button type="submit" class="btn btn-primary">Entrar</button>
         </div>
       </form>
     </div>
   </div>
-
   <script>
-    const senhaPadrao = "123456"; // senha padrão
-
+    // Usuários para testes locais (sempre use API/BD em produção)
+    const usuarios = [
+      { usuario: "admin", senha: "123456" },
+      { usuario: "jorge", senha: "senhaSegura" }
+    ];
     const form = document.getElementById("loginForm");
     const mensagem = document.getElementById("mensagem");
-
     form.addEventListener("submit", function(event) {
-      event.preventDefault(); // evita envio padrão do form
-
-      const usuario = document.getElementById("usuario").value.trim();
-      const senha = document.getElementById("senha").value;
-
-      if (senha === senhaPadrao) {
+      event.preventDefault();
+      const usuario = document.getElementById("usuario");
+      const senha = document.getElementById("senha");
+      const valorUsuario = usuario.value.trim();
+      const valorSenha = senha.value;
+      const achou = usuarios.find(u => u.usuario === valorUsuario && u.senha === valorSenha);
+      if (achou) {
         mensagem.classList.add("d-none");
-        alert(`Bem-vindo, ${usuario}! Login realizado com sucesso.`);
-        // Aqui você pode redirecionar para outra página, exemplo:
         window.location.href = "index.html";
       } else {
-        mensagem.textContent = "Senha incorreta. Tente novamente.";
+        mensagem.textContent = "Usuário ou senha incorretos.";
         mensagem.classList.remove("d-none");
+        usuario.classList.add("is-invalid");
+        senha.classList.add("is-invalid");
       }
     });
+    // Remove a marcação de inválido ao digitar novamente
+    document.getElementById("usuario").addEventListener("input", function(){ this.classList.remove("is-invalid"); mensagem.classList.add("d-none"); });
+    document.getElementById("senha").addEventListener("input", function(){ this.classList.remove("is-invalid"); mensagem.classList.add("d-none"); });
   </script>
-
 </body>
 </html>
