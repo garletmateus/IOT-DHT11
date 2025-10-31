@@ -77,8 +77,10 @@
 
     <!-- Cabeçalho -->
     <header class="d-flex justify-content-between align-items-center mb-4 flex-wrap">
-      <h2 class="m-0">🌡️ Dashboard IoT - DHT11 </h2>
-            <h2 class="m-0">TECNICO EM DESENVOLVIMENTO DE SISTEMAS</h2>
+      <div>
+        <h2 class="m-0">🌡️ Dashboard IoT - DHT11</h2>
+        <h5 class="m-0">Técnico em Desenvolvimento de Sistemas</h5>
+      </div>
       <button id="toggleTema" class="btn btn-outline-secondary mt-2 mt-md-0">🌙 Modo Escuro</button>
     </header>
 
@@ -184,8 +186,9 @@
       });
 
       function updateChartTheme(isDark) {
-        chartTemp.options = getChartOptions(isDark);
-        chartHum.options = getChartOptions(isDark);
+        const options = getChartOptions(isDark);
+        chartTemp.options = options;
+        chartHum.options = options;
         chartTemp.update();
         chartHum.update();
       }
@@ -203,6 +206,7 @@
         tempData.push(data.temperatura);
         humData.push(data.umidade);
 
+        // Limita a 20 pontos no gráfico
         if (labels.length > 20) {
           labels.shift();
           tempData.shift();
